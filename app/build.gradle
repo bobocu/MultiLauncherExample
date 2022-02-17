@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.starter.easylauncher' version '5.0.0'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.test.myapplication"
+        minSdk 23
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        dev {
+            dimension "version"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+
+        qa {
+            dimension "version"
+            applicationIdSuffix ".qa"
+            versionNameSuffix "-qa"
+            buildConfigField "String", "APPLICATION_ID_SUFFIX", "\"${applicationIdSuffix}\""
+            buildConfigField "String", "SPARTA_API_URL", "\"https://qa-sparta.spar.at/api/sparta/v1/\""
+            buildConfigField "String", "CERT_ALIAS", "\"SCEP Certificate\""
+        }
+        prod {
+            dimension "version"
+            applicationIdSuffix ".prod"
+            versionNameSuffix"-prod"
+        }
+    }
+}
+
+easylauncher {
+    defaultFlavorNaming true
+    iconNames "@mipmap/main", "@mipmap/sub"
+    productFlavors {
+        dev {
+            filters = redRibbonFilter()
+        }
+        qa {
+            filters = orangeRibbonFilter()
+        }
+    }
+
+    buildTypes {
+        debug {}
+        release {}
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
