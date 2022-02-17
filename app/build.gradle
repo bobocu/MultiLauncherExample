@@ -45,9 +45,6 @@ android {
             dimension "version"
             applicationIdSuffix ".qa"
             versionNameSuffix "-qa"
-            buildConfigField "String", "APPLICATION_ID_SUFFIX", "\"${applicationIdSuffix}\""
-            buildConfigField "String", "SPARTA_API_URL", "\"https://qa-sparta.spar.at/api/sparta/v1/\""
-            buildConfigField "String", "CERT_ALIAS", "\"SCEP Certificate\""
         }
         prod {
             dimension "version"
